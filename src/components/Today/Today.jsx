@@ -8,7 +8,33 @@ export default function Today(props) {
     const [dataByLocation, setDataByLocation] = useState();
     const [cityInput, setCityInput] = useState("");
     const [error, setError] = useState(null)
+    const DaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const FullDateToday = new Date();
+    const TodayName = DaysOfWeek[FullDateToday.getDay()];
+    const dayOfMonth = FullDateToday.getDate();
 
+
+    //get the day with suffix th,st,nd,rd
+    const getDayWithSuffix = (day) => {
+        if (day >= 11 && day <= 13) {
+            return `${day}th`;
+        }
+        switch (day % 10) {
+            case 1:
+                return `${day}st`;
+            case 2:
+                return `${day}nd`;
+            case 3:
+                return `${day}rd`;
+            default:
+                return `${day}th`;
+        }
+    };
+    const formattedDateString = `${monthNames[FullDateToday.getMonth()]} ${getDayWithSuffix(dayOfMonth)}`;
     //fetch data by a city input
     const getWeatherDataByLocation = async (e) => {
         try {
@@ -21,19 +47,30 @@ export default function Today(props) {
             console.error('Error fetching initial weather data:', error);
         }
     };
+    //show images by wather status
+    const getWeatherImage = () => {
+        const weatherStatus = dataByLocation.weather[0].main;
+        const imageMap = {
+            'Sun': './sunny.jpg',
+            'Clear': './sunny.jpg',
+            'Clouds': './cloudy.jpg',
+            'Rain': './rainy.jpg',
+            'Snow': './snowy.jpg',
+            'Wind': './windy.jpg',
+        };
+        const imageSource = imageMap[weatherStatus];
+        return imageSource;
+    };
 
-    console.log(dataByLocation)
     return (
         <>
             <div className="container">
                 <Navbar />
-
                 <div className="row">
                     <div className="col-2 pg-4">
                         Dark Mode<input className="form-check-input" type="checkbox" />Light Mode
                     </div>
                 </div>
-
                 <div className="row justify-content-center">
                     <div className="col-6 p-4">
                         <form className="form-inline" onSubmit={getWeatherDataByLocation}>
@@ -54,20 +91,27 @@ export default function Today(props) {
                                 <div className="col-md-10 col-lg-8 col-xl-6 p-5">
                                     <div className="card bg-dark text-white" >
                                         <img
-                                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/draw1.webp"
+                                            src={getWeatherImage()}
                                             className="card-img"
                                             alt="weather"
+                                            style={{opacity: "0.8"}}
                                         />
                                         <div
                                             className="card-img-overlay text-dark p-5"
-                                            style={{ borderRadius: "35px", backgroundColor: "rgba(190, 216, 232, .5)" }}
+                                            style={{ border: "5px", backgroundColor: "rgba(190, 216, 232, .5)" }}
                                         >
-                                            <h4 className="col-3 mb-0">Juneau, Alaska, US</h4>
-                                            <p className="display-2 my-3">1.28°C</p>
+                                            <h4 className="col-5 mb-0">{dataByLocation.name},{dataByLocation.sys.country}</h4>
+                                            <p className="display-2 my-3">{(dataByLocation.main.temp - 273.15).toFixed(2)} °C</p>
                                             <p className="mb-2">
-                                                Feels Like: <strong>-1.08 °C</strong>
+                                                Feels Like: <strong>{(dataByLocation.main.temp_min - 273.15).toFixed(2)} °C</strong>
                                             </p>
-                                            <h5>Snowy</h5>
+                                            <h5>{dataByLocation.weather[0].description}</h5>
+                                            <div className="row justify-content-end">
+                                            <div className="col-4 card-footer-fluid">
+                                                <h4>{TodayName}</h4>
+                                                <p>{formattedDateString}</p>
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

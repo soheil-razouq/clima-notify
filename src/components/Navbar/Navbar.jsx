@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import "./navbar.css"
 export default function Navbar() {
     return (
@@ -8,8 +8,8 @@ export default function Navbar() {
                     <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
                         <ul className="navbar-nav ">
                             <li className="nav-item">
-                                <a className="navbar-brand" href="#">
-                                    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" />
+                                <a className="navbar-brand" href="/">
+                                    <img src="./weather-logo.png" width="30" height="30" alt="" />
                                 </a>
                             </li>
                             <li className="nav-item ">

@@ -43,9 +43,7 @@ function App() {
     };
     getLocation();
   }, [])
-
-
-
+  
   return (
     <div className="App">
       <Router>
