@@ -62,29 +62,18 @@ export default function Today(props) {
         return imageSource;
     };
     //Increament forecast day
-    const forecastDays = (todayDay, forecastDayNum) => {
-        const ShortDaysOfWeek = [
-            'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
-        ];
-        for (let index = 0; index < ShortDaysOfWeek.length; index++) {
-            if (index = 6) {
-                index += 0
-                if (todayDay.substring(0, 3) == ShortDaysOfWeek[index]) {
-                    const day1 = ShortDaysOfWeek[index + 1];
-                    const day2 = ShortDaysOfWeek[index + 2];
-                    const day3 = ShortDaysOfWeek[index + 3];
-                    const day4 = ShortDaysOfWeek[index + 4];
-                    // if(forecastDayNum == 1){
-                    //     return day1 ;
-                    // }
+    const getNext4Days = () => {
+        // 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const currentDayIndex = FullDateToday.getDay();
 
-                    return day2;;
-                }
-            }
-
+        const next4Days = [];
+        for (let i = 1; i <= 4; i++) {
+            const nextDayIndex = (currentDayIndex + i) % 7;
+            next4Days.push(days[nextDayIndex]);
         }
+        return next4Days;
     };
-    console.log(forecastDays(TodayName));
 
     return (
         <>
@@ -147,7 +136,7 @@ export default function Today(props) {
                                         <div className="d-flex justify-content-around text-center pb-3 pt-2">
                                             <div className="flex-column">
                                                 <p className="small">
-                                                    <strong>{forecastDays(TodayName)}</strong>
+                                                    <strong>{getNext4Days()[0].substring(0,3)}</strong>
                                                 </p>
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
@@ -156,7 +145,38 @@ export default function Today(props) {
                                                 </p>
                                             </div>
 
+                                            <div className="flex-column">
+                                                <p className="small">
+                                                    <strong>{getNext4Days()[1].substring(0,3)}</strong>
+                                                </p>
+                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
+                                                <p className="mb-0">
+                                                    <strong>{(dataByLocation.list[2].main.temp - 273.15).toFixed(2)} °C</strong>
 
+                                                </p>
+                                            </div>
+
+                                            <div className="flex-column">
+                                                <p className="small">
+                                                    <strong>{getNext4Days()[2].substring(0,3)}</strong>
+                                                </p>
+                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
+                                                <p className="mb-0">
+                                                    <strong>{(dataByLocation.list[3].main.temp - 273.15).toFixed(2)} °C</strong>
+
+                                                </p>
+                                            </div>
+
+                                            <div className="flex-column">
+                                                <p className="small">
+                                                    <strong>{getNext4Days()[3].substring(0,3)}</strong>
+                                                </p>
+                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
+                                                <p className="mb-0">
+                                                    <strong>{(dataByLocation.list[4].main.temp - 273.15).toFixed(2)} °C</strong>
+
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
