@@ -10,6 +10,9 @@ export default function News() {
                         <img src="./weather-logo.png" alt="logo" />
                     </div>
                 </div>
+                <div className="row">
+                    
+                </div>
             </div>
         </>
     )

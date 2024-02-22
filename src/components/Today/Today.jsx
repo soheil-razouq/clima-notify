@@ -39,7 +39,7 @@ export default function Today(props) {
     const getWeatherDataByLocation = async (e) => {
         try {
             e.preventDefault();
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=f2e41bbf55c69a846243962a4b951b76`);
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=f2e41bbf55c69a846243962a4b951b76`);
             const data = await response.json();
             setDataByLocation(data);
         } catch (error) {
@@ -49,7 +49,7 @@ export default function Today(props) {
     };
     //show images by wather status
     const getWeatherImage = () => {
-        const weatherStatus = dataByLocation.weather[0].main;
+        const weatherStatus = dataByLocation.list[0].weather[0].main;
         const imageMap = {
             'Sun': './sunny.jpg',
             'Clear': './sunny.jpg',
@@ -61,6 +61,30 @@ export default function Today(props) {
         const imageSource = imageMap[weatherStatus];
         return imageSource;
     };
+    //Increament forecast day
+    const forecastDays = (todayDay, forecastDayNum) => {
+        const ShortDaysOfWeek = [
+            'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+        ];
+        for (let index = 0; index < ShortDaysOfWeek.length; index++) {
+            if (index = 6) {
+                index += 0
+                if (todayDay.substring(0, 3) == ShortDaysOfWeek[index]) {
+                    const day1 = ShortDaysOfWeek[index + 1];
+                    const day2 = ShortDaysOfWeek[index + 2];
+                    const day3 = ShortDaysOfWeek[index + 3];
+                    const day4 = ShortDaysOfWeek[index + 4];
+                    // if(forecastDayNum == 1){
+                    //     return day1 ;
+                    // }
+
+                    return day2;;
+                }
+            }
+
+        }
+    };
+    console.log(forecastDays(TodayName));
 
     return (
         <>
@@ -94,23 +118,23 @@ export default function Today(props) {
                                             src={getWeatherImage()}
                                             className="card-img"
                                             alt="weather"
-                                            style={{opacity: "0.8"}}
+                                            style={{ opacity: "0.8" }}
                                         />
                                         <div
                                             className="card-img-overlay text-dark p-5"
                                             style={{ border: "5px", backgroundColor: "rgba(190, 216, 232, .5)" }}
                                         >
-                                            <h4 className="col-5 mb-0">{dataByLocation.name},{dataByLocation.sys.country}</h4>
-                                            <p className="display-2 my-3">{(dataByLocation.main.temp - 273.15).toFixed(2)} °C</p>
+                                            <h4 className="col-5 mb-0">{dataByLocation.city.name},{dataByLocation.city.country}</h4>
+                                            <p className="display-2 my-3">{(dataByLocation.list[0].main.temp - 273.15).toFixed(2)} °C</p>
                                             <p className="mb-2">
-                                                Feels Like: <strong>{(dataByLocation.main.temp_min - 273.15).toFixed(2)} °C</strong>
+                                                Feels Like: <strong>{(dataByLocation.list[0].main.feels_like - 273.15).toFixed(2)} °C</strong>
                                             </p>
-                                            <h5>{dataByLocation.weather[0].description}</h5>
+                                            <h5>{dataByLocation.list[0].weather[0].description}</h5>
                                             <div className="row justify-content-end">
-                                            <div className="col-4 card-footer-fluid">
-                                                <h4>{TodayName}</h4>
-                                                <p>{formattedDateString}</p>
-                                            </div>
+                                                <div className="col-4 card-footer-fluid">
+                                                    <h4>{TodayName}</h4>
+                                                    <p>{formattedDateString}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -123,43 +147,15 @@ export default function Today(props) {
                                         <div className="d-flex justify-content-around text-center pb-3 pt-2">
                                             <div className="flex-column">
                                                 <p className="small">
-                                                    <strong>21°C</strong>
+                                                    <strong>{forecastDays(TodayName)}</strong>
                                                 </p>
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
-                                                    <strong>Mon</strong>
+                                                    <strong>{(dataByLocation.list[1].main.temp - 273.15).toFixed(2)} °C</strong>
+
                                                 </p>
                                             </div>
 
-                                            <div className="flex-column">
-                                                <p className="small">
-                                                    <strong>20°C</strong>
-                                                </p>
-                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
-                                                <p className="mb-0">
-                                                    <strong>Tue</strong>
-                                                </p>
-                                            </div>
-
-                                            <div className="flex-column">
-                                                <p className="small">
-                                                    <strong>21°C</strong>
-                                                </p>
-                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
-                                                <p className="mb-0">
-                                                    <strong>Wen</strong>
-                                                </p>
-                                            </div>
-
-                                            <div className="flex-column">
-                                                <p className="small">
-                                                    <strong>21°C</strong>
-                                                </p>
-                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
-                                                <p className="mb-0">
-                                                    <strong>Thu</strong>
-                                                </p>
-                                            </div>
 
                                         </div>
                                     </div>
