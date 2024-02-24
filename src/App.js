@@ -5,6 +5,7 @@ import Today from "./components/Today/Today";
 import Tomorrow from "./components/Tomorrow/Tomorrow";
 import News from "./components/News/News";
 import { useEffect, useState } from "react";
+import WeatherMap from "./components/WeatherMap/WeatherMap";
 
 function App() {
   const [error, setError] = useState(null);
@@ -51,6 +52,7 @@ function App() {
           <Route path="/" element={<Today data={dataByCurrentLocation}/>} />
           <Route path="/tomorrow" element={<Tomorrow />} />
           <Route path="/news" element={<News />} />
+          <Route path="/weathermap" element={<WeatherMap/>} />
         </Routes>
       </Router>
     </div>

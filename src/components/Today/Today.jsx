@@ -1,6 +1,9 @@
 import Navbar from "../Navbar/Navbar";
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import WeatherMap from "../WeatherMap/WeatherMap";
+import "./Today.css";
+import { Navigate } from "react-router";
 
 
 export default function Today(props) {
@@ -16,6 +19,7 @@ export default function Today(props) {
     const FullDateToday = new Date();
     const TodayName = DaysOfWeek[FullDateToday.getDay()];
     const dayOfMonth = FullDateToday.getDate();
+    const [weatherMapStatus, setWeatherMapStatus] = useState("");
 
 
     //get the day with suffix th,st,nd,rd
@@ -77,7 +81,6 @@ export default function Today(props) {
 
     return (
         <>
-            <div className="container">
                 <Navbar />
                 <div className="row">
                     <div className="col-2 pg-4">
@@ -119,12 +122,11 @@ export default function Today(props) {
                                                 Feels Like: <strong>{(dataByLocation.list[0].main.feels_like - 273.15).toFixed(2)} °C</strong>
                                             </p>
                                             <h5>{dataByLocation.list[0].weather[0].description}</h5>
-                                            <div className="row justify-content-end">
-                                                <div className="col-4 card-footer-fluid">
-                                                    <h4>{TodayName}</h4>
-                                                    <p>{formattedDateString}</p>
-                                                </div>
+                                            <div className="date-right">
+                                                <h4 >{TodayName}</h4>
+                                                <p >{formattedDateString}</p>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +138,7 @@ export default function Today(props) {
                                         <div className="d-flex justify-content-around text-center pb-3 pt-2">
                                             <div className="flex-column">
                                                 <p className="small">
-                                                    <strong>{getNext4Days()[0].substring(0,3)}</strong>
+                                                    <strong>{getNext4Days()[0].substring(0, 3)}</strong>
                                                 </p>
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
@@ -147,7 +149,7 @@ export default function Today(props) {
 
                                             <div className="flex-column">
                                                 <p className="small">
-                                                    <strong>{getNext4Days()[1].substring(0,3)}</strong>
+                                                    <strong>{getNext4Days()[1].substring(0, 3)}</strong>
                                                 </p>
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
@@ -158,7 +160,7 @@ export default function Today(props) {
 
                                             <div className="flex-column">
                                                 <p className="small">
-                                                    <strong>{getNext4Days()[2].substring(0,3)}</strong>
+                                                    <strong>{getNext4Days()[2].substring(0, 3)}</strong>
                                                 </p>
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
@@ -169,7 +171,7 @@ export default function Today(props) {
 
                                             <div className="flex-column">
                                                 <p className="small">
-                                                    <strong>{getNext4Days()[3].substring(0,3)}</strong>
+                                                    <strong>{getNext4Days()[3].substring(0, 3)}</strong>
                                                 </p>
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
@@ -180,6 +182,10 @@ export default function Today(props) {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="row">
+                                
                             </div>
                         </>
                     )
@@ -192,9 +198,6 @@ export default function Today(props) {
                         </div>
                     </div>
                 }
-
-
-            </div>
         </>
     )
 }
