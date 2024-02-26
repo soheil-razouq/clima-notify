@@ -29,7 +29,7 @@ export default function Navbar() {
                         </nav>
                     </div>
                     <div className="col-2 pt-3">
-                        <button type="button" class="btn btn-success border-radius-7">Success</button>
+                        
                     </div>
                 </div>
             </div>
