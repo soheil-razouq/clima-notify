@@ -6,7 +6,7 @@ import "./Today.css";
 import { Navigate } from "react-router";
 
 
-export default function Today(props) {
+export default function Today() {
     // consts
     const [dataByLocation, setDataByLocation] = useState();
     const [cityInput, setCityInput] = useState("");
@@ -116,17 +116,16 @@ export default function Today(props) {
                                             className="card-img-overlay text-dark p-5"
                                             style={{ border: "5px", backgroundColor: "rgba(190, 216, 232, .5)" }}
                                         >
-                                            <h4 className="col-5 mb-0">{dataByLocation.city.name},{dataByLocation.city.country}</h4>
-                                            <p className="display-2 my-3">{(dataByLocation.list[0].main.temp - 273.15).toFixed(2)} °C</p>
-                                            <p className="mb-2">
+                                            <h4 className="col-3 mb-0">{dataByLocation.city.name},{dataByLocation.city.country}</h4>
+                                            <p className="col-4 display-2 my-3">{(dataByLocation.list[0].main.temp - 273.15).toFixed(2)} °C</p>
+                                            <p className="col-2 mb-2">
                                                 Feels Like: <strong>{(dataByLocation.list[0].main.feels_like - 273.15).toFixed(2)} °C</strong>
                                             </p>
-                                            <h5>{dataByLocation.list[0].weather[0].description}</h5>
-                                            <div className="date-right">
+                                            <h5 className="col-2">{dataByLocation.list[0].weather[0].description}</h5>
+                                            <div className="col-3 date-right">
                                                 <h4 >{TodayName}</h4>
                                                 <p >{formattedDateString}</p>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +142,6 @@ export default function Today(props) {
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
                                                     <strong>{(dataByLocation.list[1].main.temp - 273.15).toFixed(2)} °C</strong>
-
                                                 </p>
                                             </div>
 
@@ -184,8 +182,7 @@ export default function Today(props) {
                                 </div>
                             </div>
 
-                            <div className="row">
-                                
+                            <div className="row">  
                             </div>
                         </>
                     )

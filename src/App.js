@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Today data={dataByCurrentLocation}/>} />
+          <Route path="/" element={<Today />} />
           <Route path="/tomorrow" element={<Tomorrow />} />
           <Route path="/news" element={<News />} />
           <Route path="/weathermap" element={<WeatherMap/>} />
