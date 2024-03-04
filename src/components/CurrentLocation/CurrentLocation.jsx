@@ -36,8 +36,6 @@ export default function CurrentLocation() {
         }
     }
 
-
-
     return (
         <>
             <button type="button" class="btn btn-success" onClick={getLocation()}>Current Location</button>

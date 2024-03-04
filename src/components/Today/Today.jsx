@@ -4,6 +4,7 @@ import { useState } from 'react';
 import WeatherMap from "../WeatherMap/WeatherMap";
 import "./Today.css";
 import { Navigate } from "react-router";
+import CurrentLocation from "../CurrentLocation/CurrentLocation";
 
 
 export default function Today() {
@@ -81,14 +82,14 @@ export default function Today() {
 
     return (
         <>
+            <div class="container h-100">
+
                 <Navbar />
-                <div className="row">
-                    <div className="col-2 pg-4">
+                <div className="row p-5">
+                    <div className="col-2">
                         Dark Mode<input className="form-check-input" type="checkbox" />Light Mode
                     </div>
-                </div>
-                <div className="row justify-content-center">
-                    <div className="col-6 p-4">
+                    <div className="col-6">
                         <form className="form-inline" onSubmit={getWeatherDataByLocation}>
                             <div className="input-group mb-2">
                                 <div className="input-group-prepend">
@@ -98,13 +99,17 @@ export default function Today() {
                             </div>
                         </form>
                     </div>
+                    <div className="col-3">
+                        <CurrentLocation />
+                    </div>
                 </div>
 
                 {dataByLocation
                     ? (
                         <>
-                            <div className="row justify-content-center">
-                                <div className="col-md-10 col-lg-8 col-xl-6 p-5">
+
+                            <div className="row justify-content-center p-5">
+                                <div className="col-5">
                                     <div className="card bg-dark text-white" >
                                         <img
                                             src={getWeatherImage()}
@@ -116,16 +121,80 @@ export default function Today() {
                                             className="card-img-overlay text-dark p-5"
                                             style={{ border: "5px", backgroundColor: "rgba(190, 216, 232, .5)" }}
                                         >
-                                            <h4 className="col-3 mb-0">{dataByLocation.city.name},{dataByLocation.city.country}</h4>
-                                            <p className="col-4 display-2 my-3">{(dataByLocation.list[0].main.temp - 273.15).toFixed(2)} °C</p>
-                                            <p className="col-2 mb-2">
+                                            <h4 className="mb-0">{dataByLocation.city.name},{dataByLocation.city.country}</h4>
+                                            <p className="display-2 my-3">{(dataByLocation.list[0].main.temp - 273.15).toFixed(2)} °C</p>
+                                            <p className="mb-2">
                                                 Feels Like: <strong>{(dataByLocation.list[0].main.feels_like - 273.15).toFixed(2)} °C</strong>
                                             </p>
-                                            <h5 className="col-2">{dataByLocation.list[0].weather[0].description}</h5>
-                                            <div className="col-3 date-right">
-                                                <h4 >{TodayName}</h4>
-                                                <p >{formattedDateString}</p>
-                                            </div>
+                                            <h5 className="mb-2">{dataByLocation.list[0].weather[0].description} <span className="text-bleu">right</span></h5>
+                                            <h4 className="text-end">{TodayName}</h4>
+                                            <p className="text-end">{formattedDateString}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-7">
+                                    <div className="row text-center" style={{ backgroundColor: "gray" }}>
+                                        <h4>today highlights</h4>
+                                    </div>
+                                    <div className="row" style={{ backgroundColor: "rgb(255, 183, 183)" }}>
+                                        <div className="col">
+                                            air quality index here
+                                        </div>
+                                        <div className="col text-center">
+                                            <p className="small">
+                                                <strong>Sunrise :</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                {(new Date(dataByLocation.city.sunrise * 1000)).getHours() + 'H'}
+                                                &nbsp;
+                                                {(new Date(dataByLocation.city.sunrise * 1000)).getMinutes() + 'Min'}
+                                            </p>
+                                        </div>
+                                        <div className="col text-center">
+                                            <p className="small">
+                                                <strong>Sunset :</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                {(new Date(dataByLocation.city.sunset * 1000)).getHours() + 'H'}
+                                                &nbsp;
+                                                {(new Date(dataByLocation.city.sunset * 1000)).getMinutes() + 'Min'}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="row" style={{ backgroundColor: "rgb(153, 183, 134)" }}>
+                                        <div className="col flex-column">
+                                            <p className="small">
+                                                <strong>Max Tem :</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                {(dataByLocation.list[0].main.temp_max - 273.15).toFixed(2)} °C
+                                            </p>
+                                        </div>
+                                        <div className="col flex-column">
+                                            <p className="small">
+                                                <strong>Min Tem :</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                {(dataByLocation.list[0].main.temp_min - 273.15).toFixed(2)} °C
+                                            </p>
+                                        </div>
+                                        <div className="col flex-column">
+                                            <p className="small">
+                                                <strong> Humidity :</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                {dataByLocation.list[0].main.humidity}
+                                            </p>
+                                        </div>
+                                        <div className="col flex-column">
+                                            <p className="small">
+                                                <strong>Wind Speed :</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                {dataByLocation.list[0].wind.speed}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +232,6 @@ export default function Today() {
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
                                                     <strong>{(dataByLocation.list[3].main.temp - 273.15).toFixed(2)} °C</strong>
-
                                                 </p>
                                             </div>
 
@@ -174,15 +242,11 @@ export default function Today() {
                                                 <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
                                                 <p className="mb-0">
                                                     <strong>{(dataByLocation.list[4].main.temp - 273.15).toFixed(2)} °C</strong>
-
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="row">  
                             </div>
                         </>
                     )
@@ -195,6 +259,7 @@ export default function Today() {
                         </div>
                     </div>
                 }
+            </div>
         </>
     )
 }
