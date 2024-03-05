@@ -10,7 +10,10 @@ import CurrentLocation from "../CurrentLocation/CurrentLocation";
 export default function Today() {
     // consts
     const [dataByLocation, setDataByLocation] = useState();
+    const [airPollutionData, setAirPollutionData] = useState("");
     const [cityInput, setCityInput] = useState("");
+    const [longitude, setLongitude] = useState();
+    const [latitude, setLatitude] = useState();
     const [error, setError] = useState(null)
     const DaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const monthNames = [
@@ -20,8 +23,6 @@ export default function Today() {
     const FullDateToday = new Date();
     const TodayName = DaysOfWeek[FullDateToday.getDay()];
     const dayOfMonth = FullDateToday.getDate();
-    const [weatherMapStatus, setWeatherMapStatus] = useState("");
-
 
     //get the day with suffix th,st,nd,rd
     const getDayWithSuffix = (day) => {
@@ -47,6 +48,12 @@ export default function Today() {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=f2e41bbf55c69a846243962a4b951b76`);
             const data = await response.json();
             setDataByLocation(data);
+            setLongitude(data.city.coord.lon);
+            setLatitude(data.city.coord.lat);
+
+            const responseAir = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${latitude}&lon=${longitude}&appid=f2e41bbf55c69a846243962a4b951b76`);
+            const AirData = await responseAir.json();
+            setAirPollutionData(AirData);
         } catch (error) {
             setError("error here in fetch data")
             console.error('Error fetching initial weather data:', error);
@@ -100,7 +107,7 @@ export default function Today() {
                         </form>
                     </div>
                     <div className="col-3">
-                        <CurrentLocation />
+                        {/* <button type="button" class="btn btn-success" onClick={getLocation()}>Current Location</button> */}
                     </div>
                 </div>
 
@@ -137,10 +144,37 @@ export default function Today() {
                                     <div className="row text-center" style={{ backgroundColor: "gray" }}>
                                         <h4>today highlights</h4>
                                     </div>
+
                                     <div className="row" style={{ backgroundColor: "rgb(255, 183, 183)" }}>
                                         <div className="col">
-                                            air quality index here
+                                            <div className="row">
+                                                <div className="col flex-column">
+                                                    <p className="small">
+                                                        <strong>CO :</strong>
+                                                    </p>
+                                                    <p className="mb-0">
+                                                        {airPollutionData.list[1].components.co}
+                                                    </p>
+                                                </div>
+                                                <div className="col flex-column">
+                                                    <p className="small">
+                                                        <strong>NO2 :</strong>
+                                                    </p>
+                                                    <p className="mb-0">
+                                                        {airPollutionData.list[1].components.no2}
+                                                    </p>
+                                                </div>
+                                                <div className="col flex-column">
+                                                    <p className="small">
+                                                        <strong>O3 :</strong>
+                                                    </p>
+                                                    <p className="mb-0">
+                                                        {airPollutionData.list[1].components.o3}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div className="col text-center">
                                             <p className="small">
                                                 <strong>Sunrise :</strong>

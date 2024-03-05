@@ -28,9 +28,6 @@ export default function Navbar() {
                             </ul>
                         </nav>
                     </div>
-                    <div className="col-2 pt-3">
-                        HENA gatkoun button 3la 7essab current location
-                    </div>
                 </div>
             </div>
         </>
