@@ -1,10 +1,8 @@
 import Navbar from "../Navbar/Navbar";
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import WeatherMap from "../WeatherMap/WeatherMap";
 import "./Today.css";
 import { Navigate } from "react-router";
-import CurrentLocation from "../CurrentLocation/CurrentLocation";
 
 
 export default function Today() {
@@ -48,12 +46,12 @@ export default function Today() {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=f2e41bbf55c69a846243962a4b951b76`);
             const data = await response.json();
             setDataByLocation(data);
-            setLongitude(data.city.coord.lon);
-            setLatitude(data.city.coord.lat);
+            // setLongitude(data.city.coord.lon);
+            // setLatitude(data.city.coord.lat);
 
-            const responseAir = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${latitude}&lon=${longitude}&appid=f2e41bbf55c69a846243962a4b951b76`);
-            const AirData = await responseAir.json();
-            setAirPollutionData(AirData);
+            // const responseAir = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${latitude}&lon=${longitude}&appid=f2e41bbf55c69a846243962a4b951b76`);
+            // const AirData = await responseAir.json();
+            // setAirPollutionData(AirData);
         } catch (error) {
             setError("error here in fetch data")
             console.error('Error fetching initial weather data:', error);
@@ -153,7 +151,7 @@ export default function Today() {
                                                         <strong>CO :</strong>
                                                     </p>
                                                     <p className="mb-0">
-                                                        {airPollutionData.list[1].components.co}
+                                                        {/* {airPollutionData.list[1].components.co} */}
                                                     </p>
                                                 </div>
                                                 <div className="col flex-column">
@@ -161,7 +159,7 @@ export default function Today() {
                                                         <strong>NO2 :</strong>
                                                     </p>
                                                     <p className="mb-0">
-                                                        {airPollutionData.list[1].components.no2}
+                                                        {/* {airPollutionData.list[1].components.no2} */}
                                                     </p>
                                                 </div>
                                                 <div className="col flex-column">
@@ -169,7 +167,7 @@ export default function Today() {
                                                         <strong>O3 :</strong>
                                                     </p>
                                                     <p className="mb-0">
-                                                        {airPollutionData.list[1].components.o3}
+                                                        {/* {airPollutionData.list[1].components.o3} */}
                                                     </p>
                                                 </div>
                                             </div>
