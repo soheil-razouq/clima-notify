@@ -4,7 +4,7 @@ export default function Navbar() {
     return (
         <>
             <div className="container">
-                <div className="row">
+                <div className="row py-4">
                     <div className="col-2">
                         <a className="navbar-brand" href="/">
                             <img src="./weather-logo.png" width="105" height="105" alt="" />
@@ -16,9 +16,9 @@ export default function Navbar() {
                                 <li className="nav-item ">
                                     <Link to={"/"} className="text-decoration-none nav-link">Today</Link>
                                 </li>
-                                <li className="nav-item">
+                                {/* <li className="nav-item">
                                     <Link to={"/tomorrow"} className="text-decoration-none nav-link">Tomorrow</Link>
-                                </li>
+                                </li> */}
                                 <li className="nav-item">
                                     <Link to={"/weathermap"} className="text-decoration-none nav-link">Weather Map</Link>
                                 </li>

@@ -9,7 +9,6 @@ const WeatherMap = () => {
     const getLayer = (e) => {
         setMapLayer(e.target.value)
     }
-    console.log(MapLayer)
     return (
         <div className="container">
             <Navbar />

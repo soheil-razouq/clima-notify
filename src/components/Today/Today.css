@@ -1,0 +1,17 @@
+.detailsCol{
+    background-color: rgb(28, 35, 54);
+    border-radius: 15px;
+    color: white;
+}
+.atm-rise-set{
+    background-color: rgba(43, 43, 66, 0.777);
+    border-radius: 25px;   
+}
+.max-min-tem-hum-win{
+    background-color: rgba(43, 43, 66, 0.777);
+    border-radius: 25px;
+}
+.forcast{
+    background-color: rgba(43, 43, 66, 0.777);
+    border-radius: 25px;
+}

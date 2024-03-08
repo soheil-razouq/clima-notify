@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import "./Today.css";
 import { Navigate } from "react-router";
+import WeatherMap from "../WeatherMap/WeatherMap";
 
 
 export default function Today() {
     // consts
     const [dataByLocation, setDataByLocation] = useState();
-    const [airPollutionData, setAirPollutionData] = useState("");
     const [cityInput, setCityInput] = useState("");
     const [longitude, setLongitude] = useState();
     const [latitude, setLatitude] = useState();
@@ -46,12 +46,8 @@ export default function Today() {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=f2e41bbf55c69a846243962a4b951b76`);
             const data = await response.json();
             setDataByLocation(data);
-            // setLongitude(data.city.coord.lon);
-            // setLatitude(data.city.coord.lat);
-
-            // const responseAir = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${latitude}&lon=${longitude}&appid=f2e41bbf55c69a846243962a4b951b76`);
-            // const AirData = await responseAir.json();
-            // setAirPollutionData(AirData);
+            setLongitude(data.city.coord.lon);
+            setLatitude(data.city.coord.lat);
         } catch (error) {
             setError("error here in fetch data")
             console.error('Error fetching initial weather data:', error);
@@ -85,16 +81,14 @@ export default function Today() {
         return next4Days;
     };
 
+    console.log(longitude, latitude);
+
     return (
         <>
             <div class="container h-100">
-
                 <Navbar />
-                <div className="row p-5">
-                    <div className="col-2">
-                        Dark Mode<input className="form-check-input" type="checkbox" />Light Mode
-                    </div>
-                    <div className="col-6">
+                <div className="row p-5 justify-content-center">
+                    <div className="col-6 ">
                         <form className="form-inline" onSubmit={getWeatherDataByLocation}>
                             <div className="input-group mb-2">
                                 <div className="input-group-prepend">
@@ -104,15 +98,11 @@ export default function Today() {
                             </div>
                         </form>
                     </div>
-                    <div className="col-3">
-                        {/* <button type="button" class="btn btn-success" onClick={getLocation()}>Current Location</button> */}
-                    </div>
                 </div>
 
                 {dataByLocation
                     ? (
                         <>
-
                             <div className="row justify-content-center p-5">
                                 <div className="col-5">
                                     <div className="card bg-dark text-white" >
@@ -138,144 +128,125 @@ export default function Today() {
                                     </div>
                                 </div>
 
-                                <div className="col-7">
-                                    <div className="row text-center" style={{ backgroundColor: "gray" }}>
+                                <div className="col-7 detailsCol">
+                                    <div className="row py-3">
                                         <h4>today highlights</h4>
                                     </div>
 
-                                    <div className="row" style={{ backgroundColor: "rgb(255, 183, 183)" }}>
+                                    {/* <div className="row">
                                         <div className="col">
-                                            <div className="row">
-                                                <div className="col flex-column">
-                                                    <p className="small">
-                                                        <strong>CO :</strong>
-                                                    </p>
-                                                    <p className="mb-0">
-                                                        {/* {airPollutionData.list[1].components.co} */}
-                                                    </p>
-                                                </div>
-                                                <div className="col flex-column">
-                                                    <p className="small">
-                                                        <strong>NO2 :</strong>
-                                                    </p>
-                                                    <p className="mb-0">
-                                                        {/* {airPollutionData.list[1].components.no2} */}
-                                                    </p>
-                                                </div>
-                                                <div className="col flex-column">
-                                                    <p className="small">
-                                                        <strong>O3 :</strong>
-                                                    </p>
-                                                    <p className="mb-0">
-                                                        {/* {airPollutionData.list[1].components.o3} */}
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            <p className="bold text-start">
+                                                <strong>Atmospheric pressure on the sea level :</strong>
+                                            </p>
                                         </div>
+                                        <div className="col">
+                                            <p className="text-end">
+                                                {dataByLocation.list[0].main.sea_level} hPa
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col">
+                                            <p className="bold text-start">
+                                                <strong>Atmospheric pressure on the ground :</strong>
+                                            </p>
+                                        </div>
+                                        <div className="col">
+                                            <p className="text-end">
+                                                {dataByLocation.list[0].main.grnd_level}  hPa
+                                            </p>
+                                        </div>
+                                    </div> */}
 
-                                        <div className="col text-center">
-                                            <p className="small">
+                                    <div className="row">
+                                        <div className="col">
+                                            <p className="bold text-start">
                                                 <strong>Sunrise :</strong>
                                             </p>
-                                            <p className="mb-0">
+                                        </div>
+                                        <div className="col">
+                                            <p className="text-end">
                                                 {(new Date(dataByLocation.city.sunrise * 1000)).getHours() + 'H'}
                                                 &nbsp;
                                                 {(new Date(dataByLocation.city.sunrise * 1000)).getMinutes() + 'Min'}
                                             </p>
                                         </div>
-                                        <div className="col text-center">
-                                            <p className="small">
+                                    </div>
+                                    <div className="row">
+                                        <div className="col">
+                                            <p className="bold text-start">
                                                 <strong>Sunset :</strong>
                                             </p>
-                                            <p className="mb-0">
+                                        </div>
+                                        <div className="col">
+                                            <p className="text-end">
                                                 {(new Date(dataByLocation.city.sunset * 1000)).getHours() + 'H'}
                                                 &nbsp;
                                                 {(new Date(dataByLocation.city.sunset * 1000)).getMinutes() + 'Min'}
                                             </p>
                                         </div>
                                     </div>
-
-                                    <div className="row" style={{ backgroundColor: "rgb(153, 183, 134)" }}>
-                                        <div className="col flex-column">
-                                            <p className="small">
-                                                <strong>Max Tem :</strong>
-                                            </p>
-                                            <p className="mb-0">
-                                                {(dataByLocation.list[0].main.temp_max - 273.15).toFixed(2)} °C
-                                            </p>
-                                        </div>
-                                        <div className="col flex-column">
-                                            <p className="small">
-                                                <strong>Min Tem :</strong>
-                                            </p>
-                                            <p className="mb-0">
-                                                {(dataByLocation.list[0].main.temp_min - 273.15).toFixed(2)} °C
-                                            </p>
-                                        </div>
-                                        <div className="col flex-column">
-                                            <p className="small">
-                                                <strong> Humidity :</strong>
-                                            </p>
-                                            <p className="mb-0">
-                                                {dataByLocation.list[0].main.humidity}
-                                            </p>
-                                        </div>
-                                        <div className="col flex-column">
-                                            <p className="small">
+                                    <div className="row">
+                                        <div className="col">
+                                            <p className="bold text-start">
                                                 <strong>Wind Speed :</strong>
                                             </p>
-                                            <p className="mb-0">
-                                                {dataByLocation.list[0].wind.speed}
+
+                                        </div>
+                                        <div className="col">
+                                            <p className="text-end">
+                                                {dataByLocation.list[0].wind.speed} M/S
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                    <div className="row">
+                                        <div className="col">
+                                            <p className="bold text-start">
+                                                <strong> Humidity :</strong>
+                                            </p>
+                                        </div>
+                                        <div className="col">
+                                            <p className="text-end">
+                                                {dataByLocation.list[0].main.humidity} %
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="row m-2 justify-content-around text-center forcast">
+                                        <div className="col flex-column day1">
+                                            <p className="bold">
+                                                <strong>{getNext4Days()[0].substring(0, 3)}</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                <strong>{(dataByLocation.list[1].main.temp - 273.15).toFixed(2)} °C</strong>
+                                            </p>
+                                        </div>
 
-                            <div className="row justify-content-center">
-                                <div className="card mb-4" style={{ borderRadius: "25px" }}>
-                                    <div className="card-body p-4">
-                                        <div className="d-flex justify-content-around text-center pb-3 pt-2">
-                                            <div className="flex-column">
-                                                <p className="small">
-                                                    <strong>{getNext4Days()[0].substring(0, 3)}</strong>
-                                                </p>
-                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
-                                                <p className="mb-0">
-                                                    <strong>{(dataByLocation.list[1].main.temp - 273.15).toFixed(2)} °C</strong>
-                                                </p>
-                                            </div>
+                                        <div className="col flex-column day2">
+                                            <p className="bold">
+                                                <strong>{getNext4Days()[1].substring(0, 3)}</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                <strong>{(dataByLocation.list[2].main.temp - 273.15).toFixed(2)} °C</strong>
 
-                                            <div className="flex-column">
-                                                <p className="small">
-                                                    <strong>{getNext4Days()[1].substring(0, 3)}</strong>
-                                                </p>
-                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
-                                                <p className="mb-0">
-                                                    <strong>{(dataByLocation.list[2].main.temp - 273.15).toFixed(2)} °C</strong>
+                                            </p>
+                                        </div>
 
-                                                </p>
-                                            </div>
+                                        <div className="col flex-column day3">
+                                            <p className="bold">
+                                                <strong>{getNext4Days()[2].substring(0, 3)}</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                <strong>{(dataByLocation.list[3].main.temp - 273.15).toFixed(2)} °C</strong>
+                                            </p>
+                                        </div>
 
-                                            <div className="flex-column">
-                                                <p className="small">
-                                                    <strong>{getNext4Days()[2].substring(0, 3)}</strong>
-                                                </p>
-                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
-                                                <p className="mb-0">
-                                                    <strong>{(dataByLocation.list[3].main.temp - 273.15).toFixed(2)} °C</strong>
-                                                </p>
-                                            </div>
-
-                                            <div className="flex-column">
-                                                <p className="small">
-                                                    <strong>{getNext4Days()[3].substring(0, 3)}</strong>
-                                                </p>
-                                                <i className="fas fa-sun fa-2x mb-3" style={{ color: "#ddd" }}></i>
-                                                <p className="mb-0">
-                                                    <strong>{(dataByLocation.list[4].main.temp - 273.15).toFixed(2)} °C</strong>
-                                                </p>
-                                            </div>
+                                        <div className="col flex-column day4">
+                                            <p className="bold">
+                                                <strong>{getNext4Days()[3].substring(0, 3)}</strong>
+                                            </p>
+                                            <p className="mb-0">
+                                                <strong>{(dataByLocation.list[4].main.temp - 273.15).toFixed(2)} °C</strong>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
