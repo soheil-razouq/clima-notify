@@ -2,8 +2,6 @@ import Navbar from "../Navbar/Navbar";
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import "./Today.css";
-import { Navigate } from "react-router";
-import WeatherMap from "../WeatherMap/WeatherMap";
 
 
 export default function Today() {
@@ -257,7 +255,7 @@ export default function Today() {
                     <div className="row justify-content-center">
                         <div className="col-md-10 col-lg-8 col-xl-6 p-5">
                             <div className="card bg-danger text-white " >
-                                No data input your city ...
+                                input your city ...
                             </div>
                         </div>
                     </div>
