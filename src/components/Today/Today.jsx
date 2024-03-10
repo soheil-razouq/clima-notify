@@ -255,7 +255,7 @@ export default function Today() {
                     <div className="row justify-content-center">
                         <div className="col-md-10 col-lg-8 col-xl-6 p-5">
                             <div className="card bg-danger text-white " >
-                                input your city ...
+                                input your city here ...
                             </div>
                         </div>
                     </div>
