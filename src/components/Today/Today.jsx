@@ -258,7 +258,11 @@ export default function Today() {
                                 input your city here ...
                             </div>
                         </div>
+                        {/* <div>
+                            nothing
+                        </div> */}
                     </div>
+                    
                 }
             </div>
         </>
