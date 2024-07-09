@@ -8,7 +8,7 @@ import WeatherMap from "./components/WeatherMap/WeatherMap";
 function App() {
   return (
     <div className="App">
-      //routes 
+      //routes HERE
       <Router>
         <Routes>
           <Route path="/" element={<Today />} />
